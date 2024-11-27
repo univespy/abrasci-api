@@ -8,6 +8,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.13"
 fastapi = {extras = ["standard"], version = "^0.115.5"}
+fastapi-users = {extras = ["sqlalchemy"], version = "^14.0.0"}
+sqlalchemy = "^2.0.36"
+alembic = "^1.14.0"
+psycopg = {extras = ["binary"], version = "^3.2.3"}
+pydantic-settings = "^2.6.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -26,6 +31,7 @@ extend-exclude = ['migrations']
 [tool.ruff.lint]
 preview = true
 select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+ignore = ['PLR6301']
 
 [tool.ruff.format]
 preview = true
@@ -36,7 +42,8 @@ pythonpath = "."
 addopts = '-p no:warnings'
 
 [tool.mypy]
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
+exclude = [".venv", "migrations"]
 
 
 [tool.taskipy.tasks]
