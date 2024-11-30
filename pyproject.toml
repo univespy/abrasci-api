@@ -8,7 +8,11 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.13"
 fastapi = {extras = ["standard"], version = "^0.115.5"}
-mypy = "^1.13.0"
+fastapi-users = {extras = ["sqlalchemy"], version = "^14.0.0"}
+sqlalchemy = "^2.0.36"
+alembic = "^1.14.0"
+psycopg = {extras = ["binary"], version = "^3.2.3"}
+pydantic-settings = "^2.6.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -18,6 +22,8 @@ taskipy = "^1.14.0"
 ruff = "^0.7.4"
 httpx = "^0.27.2"
 pytest-asyncio = "^0.24.0"
+mypy = "^1.13.0"
+testcontainers = {extras = ["postgres"], version = "^4.8.2"}
 
 [tool.ruff]
 line-length = 79
@@ -26,6 +32,7 @@ extend-exclude = ['migrations']
 [tool.ruff.lint]
 preview = true
 select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+ignore = ['PLR6301']
 
 [tool.ruff.format]
 preview = true
@@ -36,7 +43,8 @@ pythonpath = "."
 addopts = '-p no:warnings'
 
 [tool.mypy]
-plugins = ["pydantic.mypy"]
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
+exclude = [".venv", "migrations"]
 
 
 [tool.taskipy.tasks]
